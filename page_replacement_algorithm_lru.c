@@ -37,15 +37,13 @@ int main() {
             }
             if(!empty_space){
                 // if empty space is not there we will need to perform replacement
-                
-                int min_index = 100000000; // we want to calculate value at min_index
-                int element = -1; // we want to calculate this
+
+                int min_index = 100000000; // we want to calculate value which appeared most earlier
                 int index = -1; // we need to change at this position
                 for(int j=0; j<nf; j++) {
                     if(storeindexes[frames[j]] < min_index) {
                         // if last time frames[i] occured is less than already calculated min_index value then we will update our element as now it is the 'least' recently used
                         min_index = storeindexes[frames[j]]; 
-                        element = frames[j];
                         index = j;
                     }
                 }
