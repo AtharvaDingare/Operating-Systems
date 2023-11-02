@@ -29,19 +29,29 @@ int main() {
         if(!flag) {
             // if page hit did not occur then its page fault 
             pagefault++;
-            int min_index = 100000000; // we want to calculate value at min_index
-            int element = -1; // we want to calculate this
-            int index = -1; // we need to change at this position
+            int empty_space = 0;
             for(int j=0; j<nf; j++) {
-                if(storeindexes[frames[j]] < min_index) {
-                    // if last time frames[i] occured is less than already calculated min_index value then we will update our element as now it is the 'least' recently used
-                    min_index = storeindexes[frames[j]]; 
-                    element = frames[j];
-                    index = j;
+                if(frames[j] == -1){
+                    frames[j] = reference[i]; empty_space = 1; break; // if there is empty space then no debate we will give the integer at this position
                 }
             }
-            // at the end of the day we need to change at corrosponding position
-            frames[index] = reference[i];
+            if(!empty_space){
+                // if empty space is not there we will need to perform replacement
+                
+                int min_index = 100000000; // we want to calculate value at min_index
+                int element = -1; // we want to calculate this
+                int index = -1; // we need to change at this position
+                for(int j=0; j<nf; j++) {
+                    if(storeindexes[frames[j]] < min_index) {
+                        // if last time frames[i] occured is less than already calculated min_index value then we will update our element as now it is the 'least' recently used
+                        min_index = storeindexes[frames[j]]; 
+                        element = frames[j];
+                        index = j;
+                    }
+                }
+                // at the end of the day we need to change at corrosponding position
+                frames[index] = reference[i];
+            }
         }
         storeindexes[reference[i]] = i; // update the last time an element has occured
         printf("Frame State after iteration number %d \n", (i+1));
